@@ -1,31 +1,33 @@
 {
   "name": "swift-svelte-cqrs-es-example",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "..",
-    "platform": "linux/arm64"
-  },
-  "workspaceMount": "source=cqrs-es-src,type=volume,target=/workspace",
+
+  "service": "frontend",
+  "dockerComposeFile": "docker-compose.yml",
   "workspaceFolder": "/workspace",
+
+  "workspaceMount": "source=cqrs-es-src,type=volume,target=/workspace",
+
   "postCreateCommand": [
-    "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && sysctl -p",
     "cd frontend && bun install --cache-dir=/root/.bun-cache",
-    "cd frontend && bunx playwright install --with-deps"
+    "cd frontend && bunx playwright install --with-deps",
+    "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && sysctl -p"
   ],
+
   "mounts": [
     "source=bun-cache,type=volume,target=/root/.bun-cache",
     "source=playwright-browsers,type=volume,target=/.jbdevcontainer/ms-playwright"
   ],
-  "forwardPorts": [
-    5173
-  ],
+
+  "forwardPorts": [5173, 8080],
+
   "customizations": {
     "vscode": {
       "extensions": [
         "svelte.svelte-vscode",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-playwright.playwright"
+        "ms-playwright.playwright",
+        "vknabel.vscode-swift-development-environment"
       ]
     }
   }
