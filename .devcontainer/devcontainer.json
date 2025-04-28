@@ -1,27 +1,10 @@
 {
   "name": "swift-svelte-cqrs-es-example",
-
   "service": "frontend",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "compose.yaml",
   "workspaceFolder": "/workspace",
-
-  "postCreateCommand": [
-    "cd frontend && bun install --cache-dir=/root/.bun-cache",
-    "cd frontend && bunx playwright install --with-deps",
-    "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && sysctl -p"
+  "forwardPorts": [
+    5173,
+    8080
   ],
-
-  "forwardPorts": [5173, 8080],
-
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "svelte.svelte-vscode",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "ms-playwright.playwright",
-        "vknabel.vscode-swift-development-environment"
-      ]
-    }
-  }
 }

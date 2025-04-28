@@ -1,21 +1,16 @@
 services:
   frontend:
-    build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile.frontend
+    image: oven/bun:latest
     platform: linux/arm64
     volumes:
-      - ./../:/workspace
+      - ..:/workspace
     expose: ["5173"]
 
   api:
-    build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile.api
+    image: swift:6.1-jammy
     platform: linux/arm64
-    command: sh -c "cd api && swift run"
     volumes:
-      - ./../:/workspace
+      - ..:/workspace
     environment:
       DATABASE_HOST: db
       DATABASE_PORT: 5432
@@ -27,8 +22,14 @@ services:
 
   db:
     image: postgres:16
+    platform: linux/arm64
     environment:
       POSTGRES_USER: vapor_username
       POSTGRES_PASSWORD: vapor_password
       POSTGRES_DB: vapor_database
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
     expose: ["5432"]
+
+volumes:
+  postgres_db:
