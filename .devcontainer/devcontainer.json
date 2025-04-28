@@ -5,8 +5,6 @@
   "dockerComposeFile": "docker-compose.yml",
   "workspaceFolder": "/workspace",
 
-  "workspaceMount": "source=cqrs-es-src,type=volume,target=/workspace",
-
   "postCreateCommand": [
     "cd frontend && bun install --cache-dir=/root/.bun-cache",
     "cd frontend && bunx playwright install --with-deps",
