@@ -5,11 +5,8 @@ services:
       dockerfile: .devcontainer/Dockerfile.frontend
     platform: linux/arm64
     volumes:
-      - cqrs-es-src:/workspace
-      - bun-cache:/root/.bun-cache
-      - playwright-browsers:/.jbdevcontainer/ms-playwright
-    ports:
-      - "5173:5173"
+      - ./../:/workspace
+    expose: ["5173"]
 
   api:
     build:
@@ -18,31 +15,20 @@ services:
     platform: linux/arm64
     command: sh -c "cd api && swift run"
     volumes:
-      - cqrs-es-src:/workspace
+      - ./../:/workspace
     environment:
       DATABASE_HOST: db
       DATABASE_PORT: 5432
       DATABASE_USERNAME: vapor_username
       DATABASE_PASSWORD: vapor_password
       DATABASE_NAME: vapor_database
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
+    depends_on: [db]
+    expose: ["8080"]
 
   db:
     image: postgres:16
-    volumes:
-      - pg-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: vapor_username
       POSTGRES_PASSWORD: vapor_password
       POSTGRES_DB: vapor_database
-    ports:
-      - "5432:5432"
-
-volumes:
-  cqrs-es-src:
-  bun-cache:
-  playwright-browsers:
-  pg-data:
+    expose: ["5432"]
