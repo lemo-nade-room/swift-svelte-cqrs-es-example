@@ -2,22 +2,25 @@
   "name": "swift-svelte-cqrs-es-example",
   "build": {
     "dockerfile": "Dockerfile",
-    "context": ".."
+    "context": "..",
+    "platform": "linux/arm64"
   },
-
-  "workspaceFolder": "/workspace/cqrs-es",
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  "workspaceMount": "source=cqrs-es-src,type=volume,target=/workspace",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": [
+    "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && sysctl -p",
+    "bun install --cache-dir=/root/.bun-cache",
+    "bunx playwright install --with-deps"
   ],
-  "runArgs": ["--init", "-p", "5173:5173"],
-
-  "postCreateCommand": "bun install && bunx playwright install --with-deps",
-
+  "mounts": [
+    "source=bun-cache,type=cache,target=/root/.bun-cache",
+    "source=playwright-browsers,type=cache,target=/ms-playwright"
+  ],
+  "forwardPorts": [
+    5173
+  ],
   "customizations": {
     "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      },
       "extensions": [
         "svelte.svelte-vscode",
         "dbaeumer.vscode-eslint",
