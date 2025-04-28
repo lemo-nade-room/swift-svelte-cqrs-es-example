@@ -10,15 +10,12 @@
   "postCreateCommand": [
     "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf && sysctl -p",
     "cd frontend && bun install --cache-dir=/root/.bun-cache",
-    "cd frontend && PLAYWRIGHT_BROWSERS_PATH=/.jbdevcontainer/ms-playwright bunx playwright install"
+    "cd frontend && bunx playwright install --with-deps"
   ],
   "mounts": [
     "source=bun-cache,type=volume,target=/root/.bun-cache",
     "source=playwright-browsers,type=volume,target=/.jbdevcontainer/ms-playwright"
   ],
-  "containerEnv": {
-    "PLAYWRIGHT_BROWSERS_PATH": "/.jbdevcontainer/ms-playwright"
-  },
   "forwardPorts": [
     5173
   ],
