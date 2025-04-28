@@ -13,8 +13,8 @@
     "cd frontend && PLAYWRIGHT_BROWSERS_PATH=/.jbdevcontainer/ms-playwright bunx playwright install"
   ],
   "mounts": [
-    "source=bun-cache,type=cache,target=/root/.bun-cache",
-    "source=playwright-browsers,type=cache,target=/.jbdevcontainer/ms-playwright"
+    "source=bun-cache,type=volume,target=/root/.bun-cache",
+    "source=playwright-browsers,type=volume,target=/.jbdevcontainer/ms-playwright"
   ],
   "containerEnv": {
     "PLAYWRIGHT_BROWSERS_PATH": "/.jbdevcontainer/ms-playwright"
