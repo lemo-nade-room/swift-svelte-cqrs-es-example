@@ -1,4 +1,4 @@
-FROM swiftlang/swift:6.1-jammy
+FROM swift:6.1-jammy
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git pkg-config libpq5 libpq-dev libssl-dev tzdata \
