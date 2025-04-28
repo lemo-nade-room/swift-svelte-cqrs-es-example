@@ -5,7 +5,7 @@ services:
       dockerfile: .devcontainer/Dockerfile.frontend
     platform: linux/arm64
     volumes:
-      - cqrs-es-src:/workspace:cached
+      - cqrs-es-src:/workspace
       - bun-cache:/root/.bun-cache
       - playwright-browsers:/.jbdevcontainer/ms-playwright
     ports:
@@ -18,7 +18,7 @@ services:
     platform: linux/arm64
     command: sh -c "cd api && swift run"
     volumes:
-      - cqrs-es-src:/workspace:cached
+      - cqrs-es-src:/workspace
     environment:
       DATABASE_HOST: db
       DATABASE_PORT: 5432
